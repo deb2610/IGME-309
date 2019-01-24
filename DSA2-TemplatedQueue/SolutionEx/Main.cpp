@@ -2,7 +2,7 @@
 Declan E. Behan
 DSA 2 Section 2
 
-Homework 1 - Templated Stack
+Homework 1 - Templated Queue
 for Alberto's DSA 2 Class
 --------------------------------------------------------------------------------------------------*/ 
 #include "Main.h"
@@ -12,85 +12,97 @@ for Alberto's DSA 2 Class
 #include <cstdlib>
 #include <crtdbg.h>
 #include <iostream>
-#include "TemplatedStack.h"
+#include "TemplatedQueue.h"
 #include "GameObject.h"
 
 using namespace std;
 //wrapper function
-void doStackPlease() {
+void doQueuePlease() {
 
-	//create stack
-	TemplatedStack<int> numStack = TemplatedStack<int>();
+	//create Queue
+	TemplatedQueue<int> numQueue = TemplatedQueue<int>();
 
-	cout << "IsEmpty? : " << numStack.IsEmpty() << endl << endl;
+	cout << "IsEmpty? : " << numQueue.IsEmpty() << endl << endl;
 
-	//pusch to stack
-	numStack.Push(10);
-	numStack.Push(23);
-	numStack.Push(5);
+	//pusch to Queue
+	numQueue.Push(10);
+	numQueue.Push(23);
+	numQueue.Push(5);
 
 	//print
-	numStack.Print();
+	numQueue.Print();
 
 	//show data
 	cout << endl;
-	cout << "Stack Size:" << numStack.getSize() << endl;
-	cout << "Stack Max: " << numStack.getSizeMax() << endl;
-	cout << "Stack Top: " << numStack.getTopIndex() << endl;
+	cout << "Queue Size:" << numQueue.getSize() << endl;
+	cout << "Queue Max: " << numQueue.getSizeMax() << endl;
+	cout << "Queue Top: " << numQueue.getTopIndex() << endl;
 	cout << endl;
-	cout << "Popped off: " << numStack.Pop() << endl;
+	cout << "Popped off: " << numQueue.Pop() << endl;
 	cout << endl;
 
 	//show pops work
-	numStack.Print();
+	numQueue.Print();
 
 	cout << endl;
-	cout << "IsEmpty? : " << numStack.IsEmpty() << endl << endl;
+	cout << "IsEmpty? : " << numQueue.IsEmpty() << endl << endl;
+
+	numQueue.Push(11);
+	numQueue.Push(2);
+
+	numQueue.Print();
+
+	cout << endl;
+	cout << "Popped off: " << numQueue.Pop() << endl;
+	cout << endl;
+
+	numQueue.Print();
+
 
 	cout << "----------------------------------" << endl << endl;
-	//create class stack
-	TemplatedStack<GameObject> gameStack = TemplatedStack<GameObject>();
+	//create class Queue
+	TemplatedQueue<GameObject> gameQueue = TemplatedQueue<GameObject>();
 
-	cout << "IsEmpty? : " << gameStack.IsEmpty() << endl << endl;
+	cout << "IsEmpty? : " << gameQueue.IsEmpty() << endl << endl;
 
 	//create objects
 	GameObject go0 = GameObject();
 	GameObject go1 = GameObject("Shiv", 120001);
 	GameObject go2 = GameObject("Gold", 200000);
 
-	//push them to the stack
-	gameStack.Push(go0);
-	gameStack.Push(go1);
-	gameStack.Push(go2);
+	//push them to the Queue
+	gameQueue.Push(go0);
+	gameQueue.Push(go1);
+	gameQueue.Push(go2);
 
 	//tell us about em
-	gameStack.Print();
+	gameQueue.Print();
 
 	//data please
 	cout << endl;
-	cout << "Stack Size:" << gameStack.getSize() << endl;
-	cout << "Stack Max: " << gameStack.getSizeMax() << endl;
-	cout << "Stack Top: " << gameStack.getTopIndex() << endl;
+	cout << "Queue Size:" << gameQueue.getSize() << endl;
+	cout << "Queue Max: " << gameQueue.getSizeMax() << endl;
+	cout << "Queue Top: " << gameQueue.getTopIndex() << endl;
 	cout << endl;
-	cout << "Popped off: " << gameStack.Pop() << endl;
+	cout << "Popped off: " << gameQueue.Pop() << endl;
 	cout << endl;
 
 	//popping works
-	gameStack.Print();
+	gameQueue.Print();
 
 	cout << endl;
-	cout << "IsEmpty? : " << gameStack.IsEmpty() << endl << endl;
+	cout << "IsEmpty? : " << gameQueue.IsEmpty() << endl << endl;
 
 	//cout << "---Extra Credit---" << endl;
-	//cout << "Stack Data at index 1:" << numStack[1] << endl;
+	//cout << "Queue Data at index 1:" << numQueue[1] << endl;
 
 
 }
 //main method my dude
 int main() {
-	std::cout << "Hello World\n";
+	//std::cout << "Hello World\n";
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	doStackPlease();
+	doQueuePlease();
 	//_CrtDumpMemoryLeaks();
 	std::cout << "Press enter to finish"; 
 	getchar(); 

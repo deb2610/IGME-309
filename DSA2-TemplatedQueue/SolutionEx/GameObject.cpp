@@ -1,8 +1,12 @@
 #include "pch.h"
 #include "GameObject.h"
-//Homework 4 - Templated Stack
-//Created by Declan E Behan for Austins DSA Class
-//constructor
+/*--------------------------------------------------------------------------------------------------
+Declan E. Behan
+DSA 2 Section 2
+
+Homework 1 - Templated Queue
+for Alberto's DSA 2 Class
+--------------------------------------------------------------------------------------------------*/
 GameObject::GameObject()
 {
 	name = "DEFAULT";

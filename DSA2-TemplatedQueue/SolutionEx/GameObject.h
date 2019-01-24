@@ -1,8 +1,13 @@
 #pragma once
 #include <iostream>
 #include <string>
-//Homework 4 - Templated Stack
-//Created by Declan E Behan for Austins DSA Class
+/*--------------------------------------------------------------------------------------------------
+Declan E. Behan
+DSA 2 Section 2
+
+Homework 1 - Templated Queue
+for Alberto's DSA 2 Class
+--------------------------------------------------------------------------------------------------*/
 using namespace std;
 
 class GameObject
