@@ -95,7 +95,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "E06 - LERP", "E06 - LERP\E0
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "E08 - Gimbal Removal", "E08 - Gimbal Removal\E08 - Gimbal Removal.vcxproj", "{562D9687-E5A5-4AE5-BCDA-0391D518E7BD}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "E09 - Projections", "E09 - Projections\E09 - Projections.vcxproj", "{0BFF89F3-1A79-4B83-A0EB-7C16FDA662E1}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "E09 - Projections", "E08 - Projections\E09 - Projections.vcxproj", "{0BFF89F3-1A79-4B83-A0EB-7C16FDA662E1}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "E10 - ARBB", "E10 - ARBB\E10 - ARBB.vcxproj", "{9557AEB2-A186-4645-B8D0-678D133C2EFA}"
 EndProject
