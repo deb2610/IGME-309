@@ -370,6 +370,11 @@ void Application::CameraRotation(float a_fSpeed)
 	}
 	//Change the Yaw and the Pitch of the camera
 	SetCursorPos(CenterX, CenterY);//Position the mouse in the center
+
+	//tells the camera that the mouse did some movin and groovin
+	m_pCamera->ChangeYaw(fAngleY);
+	m_pCamera->ChangePitch(fAngleX);
+
 }
 //Keyboard
 void Application::ProcessKeyboard(void)
@@ -382,14 +387,25 @@ void Application::ProcessKeyboard(void)
 	float fSpeed = 0.1f;
 	float fMultiplier = sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) ||
 		sf::Keyboard::isKeyPressed(sf::Keyboard::RShift);
-
+	
+	//gets the forward vector
+	m_pCamera->GetForwardVector();
 	if (fMultiplier)
 		fSpeed *= 5.0f;
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))//forward
 		m_pCamera->MoveForward(fSpeed);
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))//back
 		m_pCamera->MoveForward(-fSpeed);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))//right
+		m_pCamera->MoveSideways(fSpeed);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))//left
+		m_pCamera->MoveSideways(-fSpeed);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))//up
+		m_pCamera->MoveVertical(fSpeed);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))//down
+		m_pCamera->MoveVertical(-fSpeed);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))//reset
+		m_pCamera->ResetCamera();
 #pragma endregion
 }
 //Joystick

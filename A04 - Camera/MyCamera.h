@@ -16,6 +16,14 @@ class MyCamera
 	vector3 m_v3Target = vector3(0.0f, 0.0f, 0.0f); //What I'm looking at
 	vector3 m_v3Above = vector3(0.0f, 1.0f, 0.0f); //What is above the camera
 
+	//say hello to my little variables
+	vector3 m_v3Forward = vector3(); //forward vec
+	vector3 m_v3Side = vector3(); //right vec
+	vector3 m_v3Vert = vector3(); //up vec
+	vector3 m_v3YawPitch = vector3(); //yawpitch
+
+	quaternion m_qOrientation = quaternion(); //rotation quaturnion
+
 	bool m_bPerspective = true; //perspective view? False is Orthographic
 
 	float m_fFOV = 45.0f; //Field of View
@@ -28,6 +36,7 @@ class MyCamera
 
 	matrix4 m_m4View; //View matrix
 	matrix4 m_m4Projection; //Projection Matrix
+
 public:
 	/*
 	USAGE: Constructor
@@ -211,12 +220,18 @@ public:
 	OUTPUT: ---
 	*/
 	void CalculateProjectionMatrix(void);
-
 	/*
 	USAGE: Translates the camera forward or backward
 	ARGUMENTS: float a_fDistance = 0.1f -> amount of movement
 	OUTPUT: ---
 	*/
+
+	vector3 GetForwardVector(void);
+
+	vector3 GetSideVector(void);
+
+	vector3 GetUpVector(void);
+
 	void MoveForward(float a_fDistance = 0.1f);
 	/*
 	USAGE: Translates the camera Upward or downward
@@ -230,6 +245,8 @@ public:
 	OUTPUT: ---
 	*/
 	void MoveSideways(float a_fDistance = 0.1f);
+	void ChangeYaw(float a_fDistance = 0.1f);
+	void ChangePitch(float a_fDistance = 0.1f);
 };
 
 } //namespace Simplex

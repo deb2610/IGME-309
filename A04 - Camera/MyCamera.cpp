@@ -46,6 +46,8 @@ Simplex::MyCamera::MyCamera(MyCamera const& other)
 
 	m_m4View = other.m_m4View;
 	m_m4Projection = other.m_m4Projection;
+
+
 }
 
 MyCamera& Simplex::MyCamera::operator=(MyCamera const& other)
@@ -66,6 +68,8 @@ void Simplex::MyCamera::Init(void)
 	CalculateProjectionMatrix();
 	CalculateViewMatrix();
 	//No pointers to initialize here
+	std::cout << "Forward X:" << m_v3Forward[0] << " Y:" << m_v3Forward[1] << " Z:" << m_v3Forward[2] << std::endl;
+
 }
 
 void Simplex::MyCamera::Release(void)
@@ -131,8 +135,8 @@ void Simplex::MyCamera::SetPositionTargetAndUpward(vector3 a_v3Position, vector3
 
 void Simplex::MyCamera::CalculateViewMatrix(void)
 {
-	//Calculate the look at most of your assignment will be reflected in this method
-	m_m4View = glm::lookAt(m_v3Position, m_v3Target, glm::normalize(m_v3Above - m_v3Position)); //position, target, upward
+	
+	m_m4View = glm::lookAt(m_v3Position, m_v3Position + m_v3Forward, glm::normalize(m_v3Above - m_v3Position)); //position, target, upward
 }
 
 void Simplex::MyCamera::CalculateProjectionMatrix(void)
@@ -149,14 +153,84 @@ void Simplex::MyCamera::CalculateProjectionMatrix(void)
 			m_v2NearFar.x, m_v2NearFar.y); //near and far
 	}
 }
+//this Method calculated the forward vector to the camera
+vector3 MyCamera::GetForwardVector(void)
+{
+	//this is the default case
+	vector3 dist = vector3(0.0f,0.0f,1.0f);
+	m_v3Forward = glm::normalize(dist);
+	
+	//if there has been a rotation that is appended to the forward vector by the quaturnion
+	m_qOrientation = quaternion(m_v3YawPitch);
+	m_v3Forward = m_qOrientation * m_v3Forward;
+	
+	//the side and up vectors are then calculated
+	GetSideVector();
+	GetUpVector();
+	return m_v3Forward;
+}
+//this method gets the side vector to the camera
+vector3 MyCamera::GetSideVector(void)
+{
+	//gets the cross of the forward and the default up case
+	vector3 side = glm::normalize(glm::cross(vector3(0.0f,1.0f,0.0f), m_v3Forward));
+	m_v3Side = glm::normalize(side);
 
+	return m_v3Side;
+}
+//this method gets the up vector to the camera
+vector3 MyCamera::GetUpVector(void)
+{
+	//gets the cross of the forward and the side vector
+	vector3 upward = glm::normalize(glm::cross(m_v3Side, m_v3Forward));
+	m_v3Vert = glm::normalize(upward);
+
+	return m_v3Vert;
+}
+//this method moves the camera forward anf backward
 void MyCamera::MoveForward(float a_fDistance)
 {
-	//The following is just an example and does not take in account the forward vector (AKA view vector)
-	m_v3Position += vector3(0.0f, 0.0f,-a_fDistance);
-	m_v3Target += vector3(0.0f, 0.0f, -a_fDistance);
-	m_v3Above += vector3(0.0f, 0.0f, -a_fDistance);
+	m_v3Position += m_v3Forward * a_fDistance;
+	m_v3Target += m_v3Forward * a_fDistance;
+	m_v3Above += m_v3Forward * a_fDistance;
 }
+//this method moves the camera left and right
+void MyCamera::MoveVertical(float a_fDistance){
+	m_v3Position += m_v3Vert * -a_fDistance;
+	m_v3Target += m_v3Vert * -a_fDistance;
+	m_v3Above += m_v3Vert * -a_fDistance;
+	
+}
+//this method moves the camera up and down
+void MyCamera::MoveSideways(float a_fDistance){
+	m_v3Position += m_v3Side * -a_fDistance;
+	m_v3Target += m_v3Side * -a_fDistance;
+	m_v3Above += m_v3Side * -a_fDistance;
 
-void MyCamera::MoveVertical(float a_fDistance){}//Needs to be defined
-void MyCamera::MoveSideways(float a_fDistance){}//Needs to be defined
+}
+//this method adjust the yaw of camera it rotates the cam on the y axis
+void MyCamera::ChangeYaw(float angle) {//deals with xz plane
+	//constrins the camera from getting janky
+	if (angle > 90)
+	{
+		angle = 90;
+	}
+	if (angle < -90)
+	{
+		angle = -90;
+	}
+	m_v3YawPitch.y += angle;
+}
+//this method adjust the pitch of camera it rotates the cam on the x axis
+void MyCamera::ChangePitch(float angle) {//deals with yz plane
+	//constrins the camera from getting janky
+	if (angle > 90)
+	{
+		angle = 90;
+	}
+	if (angle < -90)
+	{
+		angle = -90;
+	}
+	m_v3YawPitch.x += angle;
+}
